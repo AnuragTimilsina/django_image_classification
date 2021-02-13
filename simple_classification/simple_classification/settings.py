@@ -11,31 +11,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 
-#Tensorflow
-import numpy as np
-from keras import backend as K
-import tensorflow as tf 
-from tensorflow.python.keras.backend import set_session
-import keras 
-
-
-'''def get_session():
-    config = tf.ConfigProto()
-    config.gpu_options.allow_growth = True
-    return tf.Session(config=config)
-
-
-K.tensorflow_backend.set_session(get_session())
-
-config = tf.ConfigProto()
-config.gpu_options.allow_growth = True
-SESS = tf.Session(config=config)
-print("model loading")
-GRAPH1 = tf.get_default_graph()
-
-set_session(SESS)
-#Tensorflow End'''
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -159,7 +134,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = 'media/'
+
 
 

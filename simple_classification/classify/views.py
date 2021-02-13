@@ -1,37 +1,49 @@
 from django.shortcuts import render
-from django.http import JsonResponse
-import base64
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
-from django.conf import settings
-from keras.preprocessing.image import load_img
-from keras.preprocessing.image import img_to_array
-from keras.applications.imagenet_utils import decode_predictions
-#import matplotlib.pyplot as plt
-import numpy as np
-import datetime
-import traceback
-from tensorflow import keras
-#from PIL import Image
 import os
-
+from django.core.files.storage import FileSystemStorage 
 from pathlib import Path
-BASE_DIR = Path(__file__).resolve().parent.parent
-print(BASE_DIR)
-model_path = os.path.join(BASE_DIR, 'simple_image_classification.h5')
 
-model = keras.models.load_model(model_path)
+from keras.models import load_model
+from keras.preprocessing import image
+from keras.preprocessing.image import img_to_array, load_img
+import json
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+model_path = os.path.join(BASE_DIR, 'models/simple_image_classification.h5')
+
+model = load_model(model_path)
+
+
+def index(request):
+    context = {'test': 1}
+    return render(request, 'index.html', context)
 
 
 def predict(model, image):
-  class_names = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer',
+    class_names = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer',
                  'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
-  prediction = model.predict(np.array([image]))
-  predicted_class = class_names[np.argmax(prediction)]
+    prediction = model.predict(np.array([image]))
+    predicted_class = class_names[np.argmax(prediction)]
 
-  return predicted_class
+    return predicted_class
 
 
+def predictImage(request):
+
+    response = {}
+    f = request.FILES['filePath']
+    fs = FileSystemStorage()
+    filePathName = fs.save(f.name, f)
+    filePathName = fs.url(filePathName)
+    response['filePathName'] = filePathName
+    original = load_img(filePathName, target_size=(32, 32))
+    numpy_image = img_to_array(original)
+
+    prediction = predict(model, numpy_image)
+    response['name'] = str(prediction)
+    return render(request, 'index.html', response)
+
+'''
 def index(request):
 
     if request.method == "POST":
@@ -47,7 +59,8 @@ def index(request):
 
         prediction = predict(model, numpy_image)
         response['name'] = str(prediction)
-        return render(request, 'home.html', response)
+        return render(request, 'index.html', response)
 
     else:
-        return render(request, 'home.html')
+        return render(request, 'index.html')
+'''
