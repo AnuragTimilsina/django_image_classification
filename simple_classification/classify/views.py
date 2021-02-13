@@ -13,10 +13,14 @@ import datetime
 import traceback
 from tensorflow import keras
 #from PIL import Image
+import os
 
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+print(BASE_DIR)
+model_path = os.path.join(BASE_DIR, 'simple_image_classification.h5')
 
-model = keras.models.load_model(
-    '/mnt/c/Users/ASUS/Documents/programming/django/ImageClassification_django/simple_classification/simple_image_classification.h5')
+model = keras.models.load_model(model_path)
 
 
 def predict(model, image):
@@ -37,6 +41,7 @@ def index(request):
         file_name = "tb.jpg"
         file_name_2 = default_storage.save(file_name, f)
         file_url = default_storage.url(file_name_2)
+        #file_url = default_storage.url(os.path.join(BASE_DIR, file_name_2))
         original = load_img(file_url, target_size=(32, 32))
         numpy_image = img_to_array(original)
 
