@@ -8,12 +8,11 @@
     <br>
    
     <form method="post" enctype="multipart/form-data" action="predictImage">
+    
+    <br>
   
  {% csrf_token %}
- <div class="col-md-4 col-sm-4"><label for="fname">Upload Image File Here:</label> </div> <input name="filePath" type="file"><br><br>
- <br>
-
- 
+ <div class="col-md-4 col-sm-4"><label for="fname">Upload Image File Here:</label> </div> <input name="filePath" type="file">
  <input type="submit" value="Submit" ></div>
  <h2>The Image Says: {{prediction}}</h2>
  <img src={{filePathName}} alt='imagename'>

@@ -44,29 +44,8 @@ def predictImage(request):
     return render(request, 'index.html', context)
 
 
-'''
-def predict(model, image):
-    class_names = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer',
-                 'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
-    prediction = model.predict(np.array([image]))
-    predicted_class = class_names[np.argmax(prediction)]
-
-    return predicted_class
-
-
-def predictImage(request):
-
-    response = {}
-    f = request.FILES['filePath']
-    fs = FileSystemStorage()
-    filePathName = fs.save(f.name, f)
-    filePathName = fs.url(filePathName)
-    testimage = '.'+filePathName
-    response['filePathName'] = testimage
-    original = load_img(filePathName, target_size=(32, 32))
-    numpy_image = img_to_array(original)
-
-    prediction = predict(model, numpy_image)
-    response['name'] = str(prediction)
-    return render(request, 'index.html', response)
-'''
+def viewDataBase(request):
+    listOfImages = os.listdir('./media/')
+    listOfImagesPath = ['./media/'+i for i in listOfImages]
+    context = {'listOfImagesPath': listOfImagesPath}
+    return render(request, 'viewDB.html', context)

@@ -4,5 +4,6 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('', views.index, name='index'),
-    url('predictImage', views.predictImage, name='predictImage')
+    url('predictImage', views.predictImage, name='predictImage'),
+    url('viewDataBase', views.viewDataBase, name='viewDatabase'),
 ]
