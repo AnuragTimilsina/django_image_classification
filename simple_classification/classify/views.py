@@ -6,6 +6,7 @@ from pathlib import Path
 from keras.models import load_model
 from keras.preprocessing import image
 from keras.preprocessing.image import img_to_array, load_img
+import numpy as np
 import json
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,6 +20,31 @@ def index(request):
     return render(request, 'index.html', context)
 
 
+def predict(model, image):
+    class_names = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer',
+                   'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
+    prediction = model.predict(np.array([image]))
+    predicted_class = class_names[np.argmax(prediction)]
+
+    return predicted_class
+
+
+def predictImage(request):
+    f = request.FILES['filePath']
+    fs = FileSystemStorage()
+    filePathName = fs.save(f.name, f)
+    filePathName = fs.url(filePathName)
+    testimage = '.'+filePathName
+    original = load_img(testimage, target_size=(32, 32))
+    numpy_image = img_to_array(original)
+
+    prediction = predict(model, numpy_image)
+
+    context = {'filePathName': filePathName, 'prediction': prediction}
+    return render(request, 'index.html', context)
+
+
+'''
 def predict(model, image):
     class_names = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer',
                  'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
@@ -35,32 +61,12 @@ def predictImage(request):
     fs = FileSystemStorage()
     filePathName = fs.save(f.name, f)
     filePathName = fs.url(filePathName)
-    response['filePathName'] = filePathName
+    testimage = '.'+filePathName
+    response['filePathName'] = testimage
     original = load_img(filePathName, target_size=(32, 32))
     numpy_image = img_to_array(original)
 
     prediction = predict(model, numpy_image)
     response['name'] = str(prediction)
     return render(request, 'index.html', response)
-
-'''
-def index(request):
-
-    if request.method == "POST":
-        f = request.FILES['sentFile']  # here you get the files needed
-
-        response = {}
-        file_name = "tb.jpg"
-        file_name_2 = default_storage.save(file_name, f)
-        file_url = default_storage.url(file_name_2)
-        #file_url = default_storage.url(os.path.join(BASE_DIR, file_name_2))
-        original = load_img(file_url, target_size=(32, 32))
-        numpy_image = img_to_array(original)
-
-        prediction = predict(model, numpy_image)
-        response['name'] = str(prediction)
-        return render(request, 'index.html', response)
-
-    else:
-        return render(request, 'index.html')
 '''
