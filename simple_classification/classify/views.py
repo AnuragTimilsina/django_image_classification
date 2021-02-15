@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 import os
 from django.core.files.storage import FileSystemStorage 
 from pathlib import Path
@@ -40,12 +40,23 @@ def predictImage(request):
 
     prediction = predict(model, numpy_image)
 
-    context = {'filePathName': filePathName, 'prediction': prediction}
+    context = {'filePathName': filePathName, 'prediction': "The Image Says: "+prediction}
     return render(request, 'index.html', context)
 
+class ImagesAndPredcetion:
+    def __init__(self,path,prediction):
+        self.path=path
+        self.prediction=prediction
 
 def viewDataBase(request):
     listOfImages = os.listdir('./media/')
     listOfImagesPath = ['./media/'+i for i in listOfImages]
-    context = {'listOfImagesPath': listOfImagesPath}
+    listofprediction=list()
+    for image_path in listOfImagesPath:
+        original = load_img(image_path, target_size=(32, 32))
+        numpy_image = img_to_array(original)
+        predicted_letter=predict(model,numpy_image)
+        listofprediction.append(ImagesAndPredcetion(image_path,predicted_letter))
+
+    context = {'listOfImagesPath': listofprediction}
     return render(request, 'viewDB.html', context)

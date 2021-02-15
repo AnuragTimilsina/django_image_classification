@@ -5,59 +5,91 @@
 <head>
 
     <title>Image Classification</title>
+    <style>
+      *{
+        margin:0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+      body{
+        background: linear-gradient(to bottom right,rgba(229, 236, 236, 0.9),rgba(79, 98, 114, 0.6))
+      }
+      .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        font-family: cursive;
+        height:30px;
+        text-align: center;
+      }
+      div.gallery {
+        margin: 5px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 180px;
+      }
 
+      div.gallery:hover {
+        border: 1px solid #777;
+      }
+
+      div.gallery img {
+        width: 100%;
+        height: auto;
+      }
+
+      div.desc {
+        padding: 15px;
+        text-align: center;
+      }
+    </style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="author" content="Tooplate">
+    <link rel="icon" href="{% static 'img/airplane.ico' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
-    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
 
     <!-- MAIN CSS -->
 
 </head>
 
-<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+<body data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'img/tb.jpg' %}" width="70px" height="70px" style="position:relative;border-radius:50%;" alt=""></a>
+          <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button> -->
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'viewDatabase' %}" class="nav-link" >View gallery</a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              </li> -->
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <hr>
 
-    <div class="container">
-        <!-- MENU -->
-        <header>
-            <section class="navbar navbar-default navbar-static-top" role="navigation" style="align-items: center;">
-                <div class="container">
-
-                    <div class="navbar-header">
-                        <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon icon-bar"></span>
-                            <span class="icon icon-bar"></span>
-                            <span class="icon icon-bar"></span>
-                        </button>
-
-                        <!-- lOGO TEXT HERE -->
-                        <a href="index.html" class="navbar-brand"><i class="fa fa-h-square"></i>MPG Problem</a>
-                    </div>
-
-                    <!-- MENU LINKS -->
-                    <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="/" class="smoothScroll">Home</a></li>
-                            <li><a href="viewDataBase" class="smoothScroll">View gallery</a></li>
-                        </ul>
-                    </div>
-
-                </div>
-            </section>
-        </header>
-    </div>
 
 
     <!-- HOME -->
-
-
     <div class="container">
         {% block content%}
         {% endblock %}
@@ -65,45 +97,22 @@
     </div>
 
     <!-- FOOTER -->
-    <footer data-stellar-background-ratio="5">
-        <div class="container">
-            <div class="row">
-
-
-
-                <div class="col-md-12 col-sm-12 border-top">
-                    <div class="col-md-4 col-sm-6">
-                        <div class="copyright-text">
-                            <p>Copyright </p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="footer-link">
-
-                            <a href="#">Save</a>
-                        </div>
-                    </div>
-                    <div class="col-md-2 col-sm-2 text-align-center">
-                        <div class="angle-up-btn">
-                            <a href="#top" class="smoothScroll wow fadeInUp" data-wow-delay="1.2s"><i
-                                    class="fa fa-angle-up"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </footer>
+    <div class="footer">
+      <footer data-stellar-background-ratio="5">
+        <p>Copyright</p>
+      </footer>
+    </div>
 
     <!-- SCRIPTS -->
-    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <!-- <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.sticky.js' %}"></script>
     <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
     <script src="{% static 'js/wow.min.js' %}"></script>
     <script src="{% static 'js/smoothscroll.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script> -->
 
 </body>
 

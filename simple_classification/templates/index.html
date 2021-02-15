@@ -1,23 +1,23 @@
 {% extends 'header.html' %}
+{% load static %}
+
 
 {% block content%}
+<br>
+<h2>Upload Image for Classification</h2>
+<br>
+    <form method="POST" enctype="multipart/form-data" action="{% url 'predictImage' %}">
+        {% csrf_token %}
+        <div class="input-group">
+            <input name="filePath" type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+            <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Submit</button>
+    </div>
+    </form>
 
-    <h2>Upload Image for Classification</h2>
 
-    
-    <br>
-   
-    <form method="post" enctype="multipart/form-data" action="predictImage">
-    
-    <br>
-  
- {% csrf_token %}
- <div class="col-md-4 col-sm-4"><label for="fname">Upload Image File Here:</label> </div> <input name="filePath" type="file">
- <input type="submit" value="Submit" ></div>
- <h2>The Image Says: {{prediction}}</h2>
- <img src={{filePathName}} alt='imagename'>
- {{filePathName}}
-</form>
+    <h2 style="text-align: center;">{{prediction}}</h2>
+        <img src="{{ filePathName }}" class="rounded mx-auto d-block" alt="" name="FilePhoto">
+        <p style="text-align: center;"><label for="FilePhoto">{{ filePathName }}</label></p>
 <br>
 
 

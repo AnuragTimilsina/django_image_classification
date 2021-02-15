@@ -2,10 +2,13 @@
 
 {% block content %}
 
-{% for i in listOfImagesPath %}
-
-<img src={{i}} style = "width : 150px">
-
-{% endfor %}
+    {% for i in listOfImagesPath %}
+        <div class="gallery">
+            <a target="_blank" href="img_5terre.jpg">
+                <img src="{{ i.path }}" alt="Cinque Terre" width="600" height="400">
+            </a>
+            <div class="desc">{{ i.prediction }}</div>
+        </div>
+    {% endfor %}
 
 {% endblock %}
